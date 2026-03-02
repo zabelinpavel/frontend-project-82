@@ -2,7 +2,7 @@
   "name": "@hexlet/code",
   "version": "1.0.0",
   "bin": {
-  "gendiff": "bin/gendiff.js"
+    "gendiff": "bin/gendiff.js"
   },
   "description": "Compares two configuration files and shows a difference.",
   "homepage": "https://github.com/zabelinpavel/frontend-project-82#readme",
@@ -21,6 +21,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "commander": "^14.0.3"
+    "commander": "^14.0.3",
+    "lodash": "^4.17.23"
   }
 }
