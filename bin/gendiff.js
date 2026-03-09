@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import { Command } from "commander";
-import genDiff from "../index.js";
+import { Command } from 'commander';
+import genDiff from '../index.js';
 
 const program = new Command();
 
@@ -12,7 +12,7 @@ program
 
 program
     .argument('<filepath1>')
-    .argument('<filepath2>')
+    .argument('<filepath2>');
 
 program
     .option('-f, --format <type>', 'output format');

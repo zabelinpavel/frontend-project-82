@@ -2,14 +2,12 @@ import path from 'path';
 import fs from 'fs';
 import _ from 'lodash';
 
-const genDiff = (filepath1, filepath2) => {
+const parseFile = (filePath) => {
+    const absolutePath = path.resolve(process.cwd(), filePath);
+    return JSON.parse(fs.readFileSync(absolutePath, 'utf-8'));
+};
 
-    const absolutePath1 = path.resolve(process.cwd(), filepath1);
-    const absolutePath2 = path.resolve(process.cwd(), filepath2);
-
-    const data1 = JSON.parse(fs.readFileSync(absolutePath1, 'utf-8'));
-    const data2 = JSON.parse(fs.readFileSync(absolutePath2, 'utf-8'));
-
+const buildDiffLines = (data1, data2) => {
     const keys1 = Object.keys(data1);
     const keys2 = Object.keys(data2);
 
@@ -31,10 +29,18 @@ const genDiff = (filepath1, filepath2) => {
         return [
             `  - ${key}: ${data1[key]}`,
             `  + ${key}: ${data2[key]}`
-        ]
-    })
+        ];
+    });
 
     return `{\n${lines.join('\n')}\n}`;
-}
+};
 
-export default genDiff;
+const generateDiff = (filepath1, filepath2) => {
+    const data1 = parseFile(filepath1);
+    const data2 = parseFile(filepath2);
+
+    return buildDiffLines(data1, data2);
+};
+
+export default generateDiff;
+export { parseFile, buildDiffLines };
