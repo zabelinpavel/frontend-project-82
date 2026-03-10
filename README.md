@@ -2,3 +2,5 @@
 [![Actions Status](https://github.com/zabelinpavel/frontend-project-82/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/zabelinpavel/frontend-project-82/actions)
 
 [![CI](https://github.com/zabelinpavel/frontend-project-82/actions/workflows/ci.yml/badge.svg)](https://github.com/zabelinpavel/frontend-project-82/actions)
+
+[![asciicast](https://asciinema.org/a/UU0t4WEJ2SUMJsP9.svg)](https://asciinema.org/a/UU0t4WEJ2SUMJsP9)

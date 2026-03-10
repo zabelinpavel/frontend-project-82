@@ -1,11 +1,5 @@
-import path from 'path';
-import fs from 'fs';
 import _ from 'lodash';
-
-const parseFile = (filePath) => {
-    const absolutePath = path.resolve(process.cwd(), filePath);
-    return JSON.parse(fs.readFileSync(absolutePath, 'utf-8'));
-};
+import parseFile from './parsers/index.js';
 
 const buildDiffLines = (data1, data2) => {
     const keys1 = Object.keys(data1);
@@ -35,12 +29,13 @@ const buildDiffLines = (data1, data2) => {
     return `{\n${lines.join('\n')}\n}`;
 };
 
-const generateDiff = (filepath1, filepath2) => {
+const genDiff = (filepath1, filepath2) => {
+
     const data1 = parseFile(filepath1);
     const data2 = parseFile(filepath2);
 
-    return buildDiffLines(data1, data2);
+    return buildDiffLines (data1, data2);
 };
 
-export default generateDiff;
-export { parseFile, buildDiffLines };
+export default genDiff;
+export { buildDiffLines , parseFile };
