@@ -197,7 +197,7 @@ describe('plain formatter', () => {
         expect(result).toContain('foo: bar');
     });
 
-    it('should format full diff tree from real files (snapshot)', () => {
+    it('should format full diff tree from real files', () => {
         const tree = [
             {
                 key: 'common',
@@ -248,6 +248,45 @@ describe('plain formatter', () => {
         ];
         const result = plain(tree);
 
-        expect(result).toMatchSnapshot();
+        // common section
+        expect(result).toContain('common: {');
+        expect(result).toContain('+ follow: false');
+        expect(result).toContain('setting1: Value 1');
+        expect(result).toContain('- setting2: 200');
+        expect(result).toContain('- setting3: true');
+        expect(result).toContain('+ setting3: null');
+        expect(result).toContain('+ setting4: blah blah');
+        expect(result).toContain('+ setting5: {');
+        expect(result).toContain('key5: value5');
+
+        // setting6 nested section
+        expect(result).toContain('setting6: {');
+        expect(result).toContain('doge: {');
+        expect(result).toContain('- wow:');
+        expect(result).toContain('+ wow: so much');
+        expect(result).toContain('key: value');
+        expect(result).toContain('+ ops: vops');
+
+        // group1 section
+        expect(result).toContain('group1: {');
+        expect(result).toContain('- baz: bas');
+        expect(result).toContain('+ baz: bars');
+        expect(result).toContain('foo: bar');
+        expect(result).toContain('- nest: {');
+        expect(result).toContain('key: value');
+        expect(result).toContain('+ nest: str');
+
+        // group2 removed
+        expect(result).toContain('- group2: {');
+        expect(result).toContain('abc: 12345');
+        expect(result).toContain('deep: {');
+        expect(result).toContain('id: 45');
+
+        // group3 added
+        expect(result).toContain('+ group3: {');
+        expect(result).toContain('deep: {');
+        expect(result).toContain('id: {');
+        expect(result).toContain('number: 45');
+        expect(result).toContain('fee: 100500');
     });
 });
