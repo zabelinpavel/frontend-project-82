@@ -7,6 +7,14 @@ const isObject = (value) => {
 };
 
 const formatValue = (value, indent) => {
+    if (value === null) {
+        return 'null';
+    }
+
+    if (typeof value === 'boolean') {
+        return value ? 'true' : 'false';
+    }
+
     if (!isObject(value)) {
         return String(value);
     }
