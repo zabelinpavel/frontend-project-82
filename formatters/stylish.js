@@ -1,4 +1,4 @@
-const INDENT_SIZE = 4;
+const INDENT_SIZE = 2;
 const BASE_INDENT = 4;
 
 const isObject = (value) => {

@@ -65,8 +65,8 @@ describe('stylish formatter', () => {
         const result = stylish(tree);
 
         expect(result).toContain('outer: {');
-        expect(result).toContain('- inner: value1');
-        expect(result).toContain('+ inner: value2');
+        expect(result).toContain('  - inner: value1');
+        expect(result).toContain('  + inner: value2');
     });
 
     it('should format multiple nodes', () => {
@@ -77,9 +77,9 @@ describe('stylish formatter', () => {
         ];
         const result = stylish(tree);
 
-        expect(result).toContain('a: 1');
-        expect(result).toContain('+ b: 2');
-        expect(result).toContain('- c: 3');
+        expect(result).toContain('    a: 1');
+        expect(result).toContain('    + b: 2');
+        expect(result).toContain('    - c: 3');
     });
 
     it('should format deeply nested objects', () => {
@@ -100,10 +100,10 @@ describe('stylish formatter', () => {
         ];
         const result = stylish(tree);
 
-        expect(result).toContain('setting6: {');
-        expect(result).toContain('doge: {');
-        expect(result).toContain('- wow:');
-        expect(result).toContain('+ wow: so much');
+        expect(result).toContain('    setting6: {');
+        expect(result).toContain('    doge: {');
+        expect(result).toContain('      - wow:');
+        expect(result).toContain('      + wow: so much');
     });
 
     it('should format null values', () => {
@@ -112,8 +112,8 @@ describe('stylish formatter', () => {
         ];
         const result = stylish(tree);
 
-        expect(result).toContain('- setting3: true');
-        expect(result).toContain('+ setting3: null');
+        expect(result).toContain('    - setting3: true');
+        expect(result).toContain('    + setting3: null');
     });
 
     it('should format object values', () => {
@@ -126,8 +126,8 @@ describe('stylish formatter', () => {
         ];
         const result = stylish(tree);
 
-        expect(result).toContain('+ setting5: {');
-        expect(result).toContain('key5: value5');
+        expect(result).toContain('    + setting5: {');
+        expect(result).toContain('    key5: value5');
     });
 
     it('should format mixed changes in nested structure', () => {
@@ -144,10 +144,10 @@ describe('stylish formatter', () => {
         ];
         const result = stylish(tree);
 
-        expect(result).toContain('common: {');
-        expect(result).toContain('setting1: Value 1');
-        expect(result).toContain('- setting2: 200');
-        expect(result).toContain('+ follow: false');
+        expect(result).toContain('    common: {');
+        expect(result).toContain('      setting1: Value 1');
+        expect(result).toContain('      - setting2: 200');
+        expect(result).toContain('      + follow: false');
     });
 
     it('should format removed nested object', () => {
@@ -160,8 +160,8 @@ describe('stylish formatter', () => {
         ];
         const result = stylish(tree);
 
-        expect(result).toContain('- nest: {');
-        expect(result).toContain('key: value');
+        expect(result).toContain('    - nest: {');
+        expect(result).toContain('      key: value');
     });
 
     it('should format added nested object', () => {
@@ -174,7 +174,7 @@ describe('stylish formatter', () => {
         ];
         const result = stylish(tree);
 
-        expect(result).toContain('+ nest: str');
+        expect(result).toContain('    + nest: str');
     });
 
     it('should format complex nested structure from real files', () => {
@@ -191,10 +191,10 @@ describe('stylish formatter', () => {
         ];
         const result = stylish(tree);
 
-        expect(result).toContain('group1: {');
-        expect(result).toContain('- baz: bas');
-        expect(result).toContain('+ baz: bars');
-        expect(result).toContain('foo: bar');
+        expect(result).toContain('    group1: {');
+        expect(result).toContain('      - baz: bas');
+        expect(result).toContain('      + baz: bars');
+        expect(result).toContain('      foo: bar');
     });
 
     it('should format full diff tree from real files', () => {
