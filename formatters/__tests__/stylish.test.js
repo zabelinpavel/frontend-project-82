@@ -1,9 +1,9 @@
 import { describe, it, expect } from '@jest/globals';
-import plain from '../plain.js';
+import stylish from '../stylish.js';
 
-describe('plain formatter', () => {
+describe('stylish formatter', () => {
     it('should return empty object for empty tree', () => {
-        const result = plain([]);
+        const result = stylish([]);
         expect(result).toBe('{}');
     });
 
@@ -11,7 +11,7 @@ describe('plain formatter', () => {
         const tree = [
             { key: 'follow', status: 'added', value: false }
         ];
-        const result = plain(tree);
+        const result = stylish(tree);
         const expected = `{
   + follow: false
 }`;
@@ -22,7 +22,7 @@ describe('plain formatter', () => {
         const tree = [
             { key: 'proxy', status: 'removed', value: '123.234.53.22' }
         ];
-        const result = plain(tree);
+        const result = stylish(tree);
         const expected = `{
   - proxy: 123.234.53.22
 }`;
@@ -33,7 +33,7 @@ describe('plain formatter', () => {
         const tree = [
             { key: 'timeout', status: 'changed', oldValue: 50, newValue: 20 }
         ];
-        const result = plain(tree);
+        const result = stylish(tree);
         const expected = `{
   - timeout: 50
   + timeout: 20
@@ -45,7 +45,7 @@ describe('plain formatter', () => {
         const tree = [
             { key: 'setting1', status: 'unchanged', value: 'Value 1' }
         ];
-        const result = plain(tree);
+        const result = stylish(tree);
         const expected = `{
   setting1: Value 1
 }`;
@@ -62,7 +62,7 @@ describe('plain formatter', () => {
                 ]
             }
         ];
-        const result = plain(tree);
+        const result = stylish(tree);
 
         expect(result).toContain('outer: {');
         expect(result).toContain('- inner: value1');
@@ -75,7 +75,7 @@ describe('plain formatter', () => {
             { key: 'b', status: 'added', value: '2' },
             { key: 'c', status: 'removed', value: '3' }
         ];
-        const result = plain(tree);
+        const result = stylish(tree);
 
         expect(result).toContain('a: 1');
         expect(result).toContain('+ b: 2');
@@ -98,7 +98,7 @@ describe('plain formatter', () => {
                 ]
             }
         ];
-        const result = plain(tree);
+        const result = stylish(tree);
 
         expect(result).toContain('setting6: {');
         expect(result).toContain('doge: {');
@@ -110,7 +110,7 @@ describe('plain formatter', () => {
         const tree = [
             { key: 'setting3', status: 'changed', oldValue: true, newValue: null }
         ];
-        const result = plain(tree);
+        const result = stylish(tree);
 
         expect(result).toContain('- setting3: true');
         expect(result).toContain('+ setting3: null');
@@ -124,7 +124,7 @@ describe('plain formatter', () => {
                 value: { key5: 'value5' }
             }
         ];
-        const result = plain(tree);
+        const result = stylish(tree);
 
         expect(result).toContain('+ setting5: {');
         expect(result).toContain('key5: value5');
@@ -142,7 +142,7 @@ describe('plain formatter', () => {
                 ]
             }
         ];
-        const result = plain(tree);
+        const result = stylish(tree);
 
         expect(result).toContain('common: {');
         expect(result).toContain('setting1: Value 1');
@@ -158,7 +158,7 @@ describe('plain formatter', () => {
                 value: { key: 'value' }
             }
         ];
-        const result = plain(tree);
+        const result = stylish(tree);
 
         expect(result).toContain('- nest: {');
         expect(result).toContain('key: value');
@@ -172,7 +172,7 @@ describe('plain formatter', () => {
                 value: 'str'
             }
         ];
-        const result = plain(tree);
+        const result = stylish(tree);
 
         expect(result).toContain('+ nest: str');
     });
@@ -189,7 +189,7 @@ describe('plain formatter', () => {
                 ]
             }
         ];
-        const result = plain(tree);
+        const result = stylish(tree);
 
         expect(result).toContain('group1: {');
         expect(result).toContain('- baz: bas');
@@ -246,7 +246,7 @@ describe('plain formatter', () => {
                 value: { deep: { id: { number: 45 } }, fee: 100500 }
             }
         ];
-        const result = plain(tree);
+        const result = stylish(tree);
 
         // common section
         expect(result).toContain('common: {');

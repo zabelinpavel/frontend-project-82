@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import parseFile from './parsers/index.js';
-import stylish from './formatters/stylish.js';
+import stylish from './formatters/index.js';
 
 const isObject = (value) => {
     if (value === null) return false;
@@ -44,7 +44,7 @@ const buildDiffTree = (data1, data2) => {
     });
 };
 
-const genDiff = (filepath1, filepath2, format = 'plain') => {
+const genDiff = (filepath1, filepath2, format = 'stylish') => {
     const data1 = parseFile(filepath1);
     const data2 = parseFile(filepath2);
 

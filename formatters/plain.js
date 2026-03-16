@@ -1,75 +1,54 @@
-const INDENT_SIZE = 4;
-const BASE_INDENT = 2;
-
-const isObject = (value) => {
+export const isObject = (value) => {
     if (value === null) return false;
     return typeof value === 'object';
 };
 
-const formatValue = (value, indent) => {
+export const formatValue = (value) => {
     if (!isObject(value)) {
-        return String(value);
+        return typeof value === 'string' ? `'${value}'` : String(value);
     }
-
-    const entries = Object.entries(value);
-    if (entries.length === 0) {
-        return '{}';
-    }
-
-    const innerIndent = indent + INDENT_SIZE;
-    const indentStr = ' '.repeat(innerIndent);
-    const closingIndent = ' '.repeat(indent);
-
-    const lines = entries.map(([key, val]) => {
-        const formattedVal = formatValue(val, innerIndent);
-        return `${indentStr}${key}: ${formattedVal}`;
-    });
-
-    return `{\n${lines.join('\n')}\n${closingIndent}}`;
+    return '[complex value]';
 };
 
-const formatNode = (node, indent) => {
+const formatNode = (node, path = '') => {
     const { key, status, children, value, oldValue, newValue } = node;
-    const indentStr = ' '.repeat(indent);
+    const fullPath = path ? `${path}.${key}` : key;
 
     if (status === 'unchanged') {
-        return `${indentStr}${key}: ${formatValue(value, indent + INDENT_SIZE)}`;
+        return '';
     }
 
     if (status === 'added') {
-        return `${indentStr}+ ${key}: ${formatValue(value, indent + INDENT_SIZE)}`;
+        return `Property '${fullPath}' was added with value: ${formatValue(value)}`;
     }
 
     if (status === 'removed') {
-        return `${indentStr}- ${key}: ${formatValue(value, indent + INDENT_SIZE)}`;
+        return `Property '${fullPath}' was removed`;
     }
 
     if (status === 'changed') {
         if (children) {
-            const childrenFormatted = formatTree(children, indent + INDENT_SIZE);
-            return `${indentStr}${key}: {\n${childrenFormatted}\n${indentStr}}`;
+            return formatTree(children, fullPath);
         }
-        return [
-            `${indentStr}- ${key}: ${formatValue(oldValue, indent + INDENT_SIZE)}`,
-            `${indentStr}+ ${key}: ${formatValue(newValue, indent + INDENT_SIZE)}`
-        ].join('\n');
+        return `Property '${fullPath}' was updated. From ${formatValue(oldValue)} to ${formatValue(newValue)}`;
     }
 
     return '';
 };
 
-const formatTree = (tree, indent = BASE_INDENT) => {
-    const lines = tree.map((node) => formatNode(node, indent));
+const formatTree = (tree, path = '') => {
+    const lines = tree
+        .map((node) => formatNode(node, path))
+        .filter((line) => line !== '');
     return lines.join('\n');
 };
 
 const plain = (tree) => {
     if (!Array.isArray(tree) || tree.length === 0) {
-        return '{}';
+        return '';
     }
 
-    const formatted = formatTree(tree);
-    return `{\n${formatted}\n}`;
+    return formatTree(tree);
 };
 
 export default plain;
