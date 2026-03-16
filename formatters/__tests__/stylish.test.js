@@ -13,7 +13,7 @@ describe('stylish formatter', () => {
         ];
         const result = stylish(tree);
         const expected = `{
-  + follow: false
+    + follow: false
 }`;
         expect(result).toBe(expected);
     });
@@ -24,7 +24,7 @@ describe('stylish formatter', () => {
         ];
         const result = stylish(tree);
         const expected = `{
-  - proxy: 123.234.53.22
+    - proxy: 123.234.53.22
 }`;
         expect(result).toBe(expected);
     });
@@ -35,8 +35,8 @@ describe('stylish formatter', () => {
         ];
         const result = stylish(tree);
         const expected = `{
-  - timeout: 50
-  + timeout: 20
+    - timeout: 50
+    + timeout: 20
 }`;
         expect(result).toBe(expected);
     });
@@ -47,7 +47,7 @@ describe('stylish formatter', () => {
         ];
         const result = stylish(tree);
         const expected = `{
-  setting1: Value 1
+    setting1: Value 1
 }`;
         expect(result).toBe(expected);
     });

@@ -1,5 +1,5 @@
 const INDENT_SIZE = 4;
-const BASE_INDENT = 2;
+const BASE_INDENT = 4;
 
 const isObject = (value) => {
     if (value === null) return false;
