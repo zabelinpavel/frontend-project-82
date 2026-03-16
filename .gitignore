@@ -18,3 +18,10 @@ coverage/
 # Build output
 dist/
 build/
+
+# Notes
+notes.txt
+
+# Jest snapshots
+**/__snapshots__/*
+*.snap

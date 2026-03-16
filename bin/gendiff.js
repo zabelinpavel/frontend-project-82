@@ -15,10 +15,10 @@ program
     .argument('<filepath2>');
 
 program
-    .option('-f, --format <type>', 'output format');
+    .option('-f, --format <type>', 'output format', 'plain');
 
-program.action((filePath1, filePath2) => {
-    const result = generateDiff(filePath1, filePath2);
+program.action((filePath1, filePath2, options) => {
+    const result = generateDiff(filePath1, filePath2, options.format);
     console.log(result);
 });
 

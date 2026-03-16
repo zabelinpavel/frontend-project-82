@@ -1,41 +1,57 @@
 import _ from 'lodash';
 import parseFile from './parsers/index.js';
+import stylish from './formatters/stylish.js';
 
-const buildDiffLines = (data1, data2) => {
+const isObject = (value) => {
+    if (value === null) return false;
+    return typeof value === 'object';
+};
+
+const buildDiffTree = (data1, data2) => {
     const keys1 = Object.keys(data1);
     const keys2 = Object.keys(data2);
 
     const allKeys = _.sortBy(_.union(keys1, keys2));
 
-    const lines = allKeys.flatMap((key) => {
-        if (!Object.hasOwn(data2, key)) {
-            return `  - ${key}: ${data1[key]}`;
+    return allKeys.map((key) => {
+        const value1 = data1[key];
+        const value2 = data2[key];
+
+        const hasKey1 = Object.hasOwn(data1, key);
+        const hasKey2 = Object.hasOwn(data2, key);
+
+        if (!hasKey2) {
+            return { key, status: 'removed', value: value1 };
         }
 
-        if (!Object.hasOwn(data1, key)) {
-            return `  + ${key}: ${data2[key]}`;
+        if (!hasKey1) {
+            return { key, status: 'added', value: value2 };
         }
 
-        if (data1[key] === data2[key]) {
-            return `    ${key}: ${data1[key]}`;
+        if (isObject(value1) && isObject(value2)) {
+            return {
+                key,
+                status: 'changed',
+                children: buildDiffTree(value1, value2)
+            };
         }
 
-        return [
-            `  - ${key}: ${data1[key]}`,
-            `  + ${key}: ${data2[key]}`
-        ];
+        if (value1 === value2) {
+            return { key, status: 'unchanged', value: value1 };
+        }
+
+        return { key, status: 'changed', oldValue: value1, newValue: value2 };
     });
-
-    return `{\n${lines.join('\n')}\n}`;
 };
 
-const genDiff = (filepath1, filepath2) => {
-
+const genDiff = (filepath1, filepath2, format = 'plain') => {
     const data1 = parseFile(filepath1);
     const data2 = parseFile(filepath2);
 
-    return buildDiffLines (data1, data2);
+    const tree = buildDiffTree(data1, data2);
+
+    return stylish(tree, format);
 };
 
 export default genDiff;
-export { buildDiffLines , parseFile };
+export { buildDiffTree, parseFile };
