@@ -47,7 +47,7 @@ describe('stylish formatter', () => {
         ];
         const result = stylish(tree);
         const expected = `{
-    setting1: Value 1
+      setting1: Value 1
 }`;
         expect(result).toBe(expected);
     });
@@ -77,7 +77,7 @@ describe('stylish formatter', () => {
         ];
         const result = stylish(tree);
 
-        expect(result).toContain('    a: 1');
+        expect(result).toContain('      a: 1');
         expect(result).toContain('    + b: 2');
         expect(result).toContain('    - c: 3');
     });
@@ -101,9 +101,9 @@ describe('stylish formatter', () => {
         const result = stylish(tree);
 
         expect(result).toContain('    setting6: {');
-        expect(result).toContain('    doge: {');
-        expect(result).toContain('      - wow:');
-        expect(result).toContain('      + wow: so much');
+        expect(result).toContain('      doge: {');
+        expect(result).toContain('        - wow:');
+        expect(result).toContain('        + wow: so much');
     });
 
     it('should format null values', () => {
@@ -127,7 +127,7 @@ describe('stylish formatter', () => {
         const result = stylish(tree);
 
         expect(result).toContain('    + setting5: {');
-        expect(result).toContain('    key5: value5');
+        expect(result).toContain('      key5: value5');
     });
 
     it('should format mixed changes in nested structure', () => {
@@ -251,42 +251,42 @@ describe('stylish formatter', () => {
         // common section
         expect(result).toContain('common: {');
         expect(result).toContain('+ follow: false');
-        expect(result).toContain('setting1: Value 1');
+        expect(result).toContain('  setting1: Value 1');
         expect(result).toContain('- setting2: 200');
         expect(result).toContain('- setting3: true');
         expect(result).toContain('+ setting3: null');
         expect(result).toContain('+ setting4: blah blah');
         expect(result).toContain('+ setting5: {');
-        expect(result).toContain('key5: value5');
+        expect(result).toContain('  key5: value5');
 
         // setting6 nested section
         expect(result).toContain('setting6: {');
         expect(result).toContain('doge: {');
         expect(result).toContain('- wow:');
         expect(result).toContain('+ wow: so much');
-        expect(result).toContain('key: value');
+        expect(result).toContain('  key: value');
         expect(result).toContain('+ ops: vops');
 
         // group1 section
         expect(result).toContain('group1: {');
         expect(result).toContain('- baz: bas');
         expect(result).toContain('+ baz: bars');
-        expect(result).toContain('foo: bar');
+        expect(result).toContain('  foo: bar');
         expect(result).toContain('- nest: {');
-        expect(result).toContain('key: value');
+        expect(result).toContain('  key: value');
         expect(result).toContain('+ nest: str');
 
         // group2 removed
         expect(result).toContain('- group2: {');
-        expect(result).toContain('abc: 12345');
-        expect(result).toContain('deep: {');
-        expect(result).toContain('id: 45');
+        expect(result).toContain('  abc: 12345');
+        expect(result).toContain('  deep: {');
+        expect(result).toContain('  id: 45');
 
         // group3 added
         expect(result).toContain('+ group3: {');
-        expect(result).toContain('deep: {');
-        expect(result).toContain('id: {');
-        expect(result).toContain('number: 45');
-        expect(result).toContain('fee: 100500');
+        expect(result).toContain('  deep: {');
+        expect(result).toContain('  id: {');
+        expect(result).toContain('  number: 45');
+        expect(result).toContain('  fee: 100500');
     });
 });
