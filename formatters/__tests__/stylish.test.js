@@ -7,47 +7,47 @@ describe('stylish formatter', () => {
         expect(result).toBe('{}');
     });
 
-    it('should format simple added node exactly', () => {
+    it('should format simple added node', () => {
         const tree = [
             { key: 'follow', status: 'added', value: false }
         ];
         const result = stylish(tree);
         const expected = `{
-    + follow: false
+  + follow: false
 }`;
         expect(result).toBe(expected);
     });
 
-    it('should format simple removed node exactly', () => {
+    it('should format simple removed node', () => {
         const tree = [
             { key: 'proxy', status: 'removed', value: '123.234.53.22' }
         ];
         const result = stylish(tree);
         const expected = `{
-    - proxy: 123.234.53.22
+  - proxy: 123.234.53.22
 }`;
         expect(result).toBe(expected);
     });
 
-    it('should format changed primitive value exactly', () => {
+    it('should format changed primitive value', () => {
         const tree = [
             { key: 'timeout', status: 'changed', oldValue: 50, newValue: 20 }
         ];
         const result = stylish(tree);
         const expected = `{
-    - timeout: 50
-    + timeout: 20
+  - timeout: 50
+  + timeout: 20
 }`;
         expect(result).toBe(expected);
     });
 
-    it('should format unchanged node exactly', () => {
+    it('should format unchanged node', () => {
         const tree = [
             { key: 'setting1', status: 'unchanged', value: 'Value 1' }
         ];
         const result = stylish(tree);
         const expected = `{
-      setting1: Value 1
+  setting1: Value 1
 }`;
         expect(result).toBe(expected);
     });
@@ -64,9 +64,9 @@ describe('stylish formatter', () => {
         ];
         const result = stylish(tree);
 
-        expect(result).toContain('outer: {');
-        expect(result).toContain('  - inner: value1');
-        expect(result).toContain('  + inner: value2');
+        expect(result).toContain('  outer: {');
+        expect(result).toContain('    - inner: value1');
+        expect(result).toContain('    + inner: value2');
     });
 
     it('should format multiple nodes', () => {
@@ -77,9 +77,9 @@ describe('stylish formatter', () => {
         ];
         const result = stylish(tree);
 
-        expect(result).toContain('      a: 1');
-        expect(result).toContain('    + b: 2');
-        expect(result).toContain('    - c: 3');
+        expect(result).toContain('  a: 1');
+        expect(result).toContain('  + b: 2');
+        expect(result).toContain('  - c: 3');
     });
 
     it('should format deeply nested objects', () => {
@@ -100,10 +100,10 @@ describe('stylish formatter', () => {
         ];
         const result = stylish(tree);
 
-        expect(result).toContain('    setting6: {');
-        expect(result).toContain('      doge: {');
-        expect(result).toContain('        - wow:');
-        expect(result).toContain('        + wow: so much');
+        expect(result).toContain('  setting6: {');
+        expect(result).toContain('    doge: {');
+        expect(result).toContain('      - wow: ');
+        expect(result).toContain('      + wow: so much');
     });
 
     it('should format null values', () => {
@@ -112,8 +112,8 @@ describe('stylish formatter', () => {
         ];
         const result = stylish(tree);
 
-        expect(result).toContain('    - setting3: true');
-        expect(result).toContain('    + setting3: null');
+        expect(result).toContain('  - setting3: true');
+        expect(result).toContain('  + setting3: null');
     });
 
     it('should format object values', () => {
@@ -126,8 +126,8 @@ describe('stylish formatter', () => {
         ];
         const result = stylish(tree);
 
-        expect(result).toContain('    + setting5: {');
-        expect(result).toContain('      key5: value5');
+        expect(result).toContain('  + setting5: {');
+        expect(result).toContain('    key5: value5');
     });
 
     it('should format mixed changes in nested structure', () => {
@@ -144,10 +144,10 @@ describe('stylish formatter', () => {
         ];
         const result = stylish(tree);
 
-        expect(result).toContain('    common: {');
-        expect(result).toContain('      setting1: Value 1');
-        expect(result).toContain('      - setting2: 200');
-        expect(result).toContain('      + follow: false');
+        expect(result).toContain('  common: {');
+        expect(result).toContain('    setting1: Value 1');
+        expect(result).toContain('    - setting2: 200');
+        expect(result).toContain('    + follow: false');
     });
 
     it('should format removed nested object', () => {
@@ -160,8 +160,8 @@ describe('stylish formatter', () => {
         ];
         const result = stylish(tree);
 
-        expect(result).toContain('    - nest: {');
-        expect(result).toContain('      key: value');
+        expect(result).toContain('  - nest: {');
+        expect(result).toContain('    key: value');
     });
 
     it('should format added nested object', () => {
@@ -174,10 +174,10 @@ describe('stylish formatter', () => {
         ];
         const result = stylish(tree);
 
-        expect(result).toContain('    + nest: str');
+        expect(result).toContain('  + nest: str');
     });
 
-    it('should format complex nested structure from real files', () => {
+    it('should format complex nested structure', () => {
         const tree = [
             {
                 key: 'group1',
@@ -191,13 +191,13 @@ describe('stylish formatter', () => {
         ];
         const result = stylish(tree);
 
-        expect(result).toContain('    group1: {');
-        expect(result).toContain('      - baz: bas');
-        expect(result).toContain('      + baz: bars');
-        expect(result).toContain('      foo: bar');
+        expect(result).toContain('  group1: {');
+        expect(result).toContain('    - baz: bas');
+        expect(result).toContain('    + baz: bars');
+        expect(result).toContain('    foo: bar');
     });
 
-    it('should format full diff tree from real files', () => {
+    it('should format full diff tree', () => {
         const tree = [
             {
                 key: 'common',
@@ -248,45 +248,67 @@ describe('stylish formatter', () => {
         ];
         const result = stylish(tree);
 
-        // common section
-        expect(result).toContain('common: {');
-        expect(result).toContain('+ follow: false');
-        expect(result).toContain('  setting1: Value 1');
-        expect(result).toContain('- setting2: 200');
-        expect(result).toContain('- setting3: true');
-        expect(result).toContain('+ setting3: null');
-        expect(result).toContain('+ setting4: blah blah');
-        expect(result).toContain('+ setting5: {');
-        expect(result).toContain('  key5: value5');
+        expect(result).toContain('  common: {');
+        expect(result).toContain('    + follow: false');
+        expect(result).toContain('    setting1: Value 1');
+        expect(result).toContain('    - setting2: 200');
+        expect(result).toContain('    - setting3: true');
+        expect(result).toContain('    + setting3: null');
+        expect(result).toContain('    + setting4: blah blah');
+        expect(result).toContain('    + setting5: {');
+        expect(result).toContain('      key5: value5');
 
-        // setting6 nested section
-        expect(result).toContain('setting6: {');
-        expect(result).toContain('doge: {');
-        expect(result).toContain('- wow:');
-        expect(result).toContain('+ wow: so much');
-        expect(result).toContain('  key: value');
-        expect(result).toContain('+ ops: vops');
+        expect(result).toContain('  setting6: {');
+        expect(result).toContain('    doge: {');
+        expect(result).toContain('      - wow: ');
+        expect(result).toContain('      + wow: so much');
+        expect(result).toContain('    key: value');
+        expect(result).toContain('    + ops: vops');
 
-        // group1 section
-        expect(result).toContain('group1: {');
-        expect(result).toContain('- baz: bas');
-        expect(result).toContain('+ baz: bars');
-        expect(result).toContain('  foo: bar');
-        expect(result).toContain('- nest: {');
-        expect(result).toContain('  key: value');
-        expect(result).toContain('+ nest: str');
+        expect(result).toContain('  group1: {');
+        expect(result).toContain('    - baz: bas');
+        expect(result).toContain('    + baz: bars');
+        expect(result).toContain('    foo: bar');
+        expect(result).toContain('    - nest: {');
+        expect(result).toContain('      key: value');
+        expect(result).toContain('    + nest: str');
 
-        // group2 removed
-        expect(result).toContain('- group2: {');
-        expect(result).toContain('  abc: 12345');
-        expect(result).toContain('  deep: {');
-        expect(result).toContain('  id: 45');
+        expect(result).toContain('  - group2: {');
+        expect(result).toContain('    abc: 12345');
+        expect(result).toContain('    deep: {');
+        expect(result).toContain('      id: 45');
 
-        // group3 added
-        expect(result).toContain('+ group3: {');
-        expect(result).toContain('  deep: {');
-        expect(result).toContain('  id: {');
-        expect(result).toContain('  number: 45');
-        expect(result).toContain('  fee: 100500');
+        expect(result).toContain('  + group3: {');
+        expect(result).toContain('    deep: {');
+        expect(result).toContain('      id: {');
+        expect(result).toContain('        number: 45');
+        expect(result).toContain('    fee: 100500');
+    });
+
+    it('should format boolean false', () => {
+        const tree = [
+            { key: 'setting', status: 'unchanged', value: false }
+        ];
+        const result = stylish(tree);
+
+        expect(result).toBe('{\n  setting: false\n}');
+    });
+
+    it('should format number 0', () => {
+        const tree = [
+            { key: 'foo', status: 'unchanged', value: 0 }
+        ];
+        const result = stylish(tree);
+
+        expect(result).toBe('{\n  foo: 0\n}');
+    });
+
+    it('should format empty string', () => {
+        const tree = [
+            { key: 'wow', status: 'unchanged', value: '' }
+        ];
+        const result = stylish(tree);
+
+        expect(result).toBe('{\n  wow: \n}');
     });
 });

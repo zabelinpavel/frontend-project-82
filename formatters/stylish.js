@@ -1,5 +1,5 @@
 const INDENT_SIZE = 2;
-const BASE_INDENT = 4;
+const BASE_INDENT = 2;
 
 const isObject = (value) => {
     if (value === null) return false;
@@ -41,7 +41,7 @@ const formatNode = (node, indent) => {
     const indentStr = ' '.repeat(indent);
 
     if (status === 'unchanged') {
-        return `${indentStr}  ${key}: ${formatValue(value, indent + INDENT_SIZE)}`;
+        return `${indentStr}${key}: ${formatValue(value, indent + INDENT_SIZE)}`;
     }
 
     if (status === 'added') {
@@ -55,7 +55,7 @@ const formatNode = (node, indent) => {
     if (status === 'changed') {
         if (children) {
             const childrenFormatted = formatTree(children, indent + INDENT_SIZE);
-            return `${indentStr}  ${key}: {\n${childrenFormatted}\n${indentStr}}`;
+            return `${indentStr}${key}: {\n${childrenFormatted}\n${indentStr}}`;
         }
         return [
             `${indentStr}- ${key}: ${formatValue(oldValue, indent + INDENT_SIZE)}`,
