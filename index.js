@@ -22,14 +22,14 @@ const buildDiffTree = (data1, data2) => {
 
     if (!hasKey2) {
       return {
- key, status: 'removed', value: value1, 
-};
+        key, status: 'removed', value: value1,
+      };
     }
 
     if (!hasKey1) {
       return {
- key, status: 'added', value: value2, 
-};
+        key, status: 'added', value: value2,
+      };
     }
 
     if (isObject(value1) && isObject(value2)) {
@@ -68,5 +68,5 @@ const genDiff = (filepath1, filepath2, format = 'stylish') => {
 
 export default genDiff;
 export {
- buildDiffTree, parseFile, 
+  buildDiffTree, parseFile,
 };

@@ -1,5 +1,5 @@
 import {
- describe, it, expect, 
+  describe, it, expect,
 } from '@jest/globals';
 import stylish from '../stylish.js';
 
@@ -12,14 +12,14 @@ describe('stylish formatter', () => {
   it('should format flat objects', () => {
     const tree = [
       {
- key: 'follow', status: 'removed', value: false, 
-},
+        key: 'follow', status: 'removed', value: false,
+      },
       {
- key: 'host', status: 'unchanged', value: 'hexlet.io', 
-},
+        key: 'host', status: 'unchanged', value: 'hexlet.io',
+      },
       {
- key: 'proxy', status: 'removed', value: '123.234.53.22', 
-},
+        key: 'proxy', status: 'removed', value: '123.234.53.22',
+      },
       {
         key: 'timeout',
         status: 'changed',
@@ -27,8 +27,8 @@ describe('stylish formatter', () => {
         newValue: 20,
       },
       {
- key: 'verbose', status: 'added', value: true, 
-},
+        key: 'verbose', status: 'added', value: true,
+      },
     ];
     const result = stylish(tree);
     const expected = `{
@@ -98,11 +98,11 @@ describe('stylish formatter', () => {
                 ],
               },
               {
- key: 'key', status: 'unchanged', value: 'value', 
-},
+                key: 'key', status: 'unchanged', value: 'value',
+              },
               {
- key: 'ops', status: 'added', value: 'vops', 
-},
+                key: 'ops', status: 'added', value: 'vops',
+              },
             ],
           },
         ],
@@ -118,14 +118,14 @@ describe('stylish formatter', () => {
             newValue: 'bars',
           },
           {
- key: 'foo', status: 'unchanged', value: 'bar', 
-},
+            key: 'foo', status: 'unchanged', value: 'bar',
+          },
           {
             key: 'nest',
             status: 'changed',
             oldValue: {
- key: 'value', 
-},
+              key: 'value',
+            },
             newValue: 'str',
           },
         ],
@@ -136,8 +136,8 @@ describe('stylish formatter', () => {
         value: {
           abc: 12345,
           deep: {
- id: 45, 
-},
+            id: 45,
+          },
         },
       },
       {
@@ -145,10 +145,10 @@ describe('stylish formatter', () => {
         status: 'added',
         value: {
           deep: {
- id: {
- number: 45, 
-}, 
-},
+            id: {
+              number: 45,
+            },
+          },
           fee: 100500,
         },
       },

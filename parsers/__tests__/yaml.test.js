@@ -1,5 +1,5 @@
 import {
- describe, it, expect, 
+  describe, it, expect,
 } from '@jest/globals';
 import parseYaml from '../yaml.js';
 

@@ -1,62 +1,62 @@
 import {
- describe, it, expect, 
+  describe, it, expect,
 } from '@jest/globals';
 import genDiff, {
- buildDiffTree, 
+  buildDiffTree,
 } from '../index.js';
 
 describe('buildDiffTree', () => {
   it('should show removed keys', () => {
     const data1 = {
- key: 'value', 
-};
+      key: 'value',
+    };
     const data2 = {};
     const result = buildDiffTree(data1, data2);
 
     expect(result).toEqual([
       {
- key: 'key', status: 'removed', value: 'value', 
-},
+        key: 'key', status: 'removed', value: 'value',
+      },
     ]);
   });
 
   it('should show added keys', () => {
     const data1 = {};
     const data2 = {
- key: 'value', 
-};
+      key: 'value',
+    };
     const result = buildDiffTree(data1, data2);
 
     expect(result).toEqual([
       {
- key: 'key', status: 'added', value: 'value', 
-},
+        key: 'key', status: 'added', value: 'value',
+      },
     ]);
   });
 
   it('should show unchanged keys', () => {
     const data1 = {
- key: 'value', 
-};
+      key: 'value',
+    };
     const data2 = {
- key: 'value', 
-};
+      key: 'value',
+    };
     const result = buildDiffTree(data1, data2);
 
     expect(result).toEqual([
       {
- key: 'key', status: 'unchanged', value: 'value', 
-},
+        key: 'key', status: 'unchanged', value: 'value',
+      },
     ]);
   });
 
   it('should show changed values', () => {
     const data1 = {
- key: 'old', 
-};
+      key: 'old',
+    };
     const data2 = {
- key: 'new', 
-};
+      key: 'new',
+    };
     const result = buildDiffTree(data1, data2);
 
     expect(result).toEqual([
@@ -71,15 +71,15 @@ describe('buildDiffTree', () => {
 
   it('should handle nested objects', () => {
     const data1 = {
- outer: {
- inner: 'value1', 
-}, 
-};
+      outer: {
+        inner: 'value1',
+      },
+    };
     const data2 = {
- outer: {
- inner: 'value2', 
-}, 
-};
+      outer: {
+        inner: 'value2',
+      },
+    };
     const result = buildDiffTree(data1, data2);
 
     expect(result).toEqual([
@@ -100,11 +100,11 @@ describe('buildDiffTree', () => {
 
   it('should handle mixed changes', () => {
     const data1 = {
- a: '1', b: '2', c: '3', 
-};
+      a: '1', b: '2', c: '3',
+    };
     const data2 = {
- a: '1', b: 'changed', d: '4', 
-};
+      a: '1', b: 'changed', d: '4',
+    };
     const result = buildDiffTree(data1, data2);
 
     expect(result).toEqual([

@@ -34,32 +34,32 @@ const formatNode = (node, depth) => {
   } = node;
 
   switch (status) {
-    case 'unchanged':
-      return `${getIndent(depth)}${key}: ${formatValue(value, depth + 1)}`;
+  case 'unchanged':
+    return `${getIndent(depth)}${key}: ${formatValue(value, depth + 1)}`;
 
-    case 'added':
-      return `${getIndent(depth, '+')}${key}: ${formatValue(value, depth + 1)}`;
+  case 'added':
+    return `${getIndent(depth, '+')}${key}: ${formatValue(value, depth + 1)}`;
 
-    case 'removed':
-      return `${getIndent(depth, '-')}${key}: ${formatValue(value, depth + 1)}`;
+  case 'removed':
+    return `${getIndent(depth, '-')}${key}: ${formatValue(value, depth + 1)}`;
 
-    case 'changed':
-      if (children) {
-        return `${getIndent(depth)}${key}: {\n${formatTree(children, depth + 1)}\n${' '.repeat(depth * INDENT_SIZE)}}`;
-      }
-      return [
-        `${getIndent(depth, '-')}${key}: ${formatValue(oldValue, depth + 1)}`,
-        `${getIndent(depth, '+')}${key}: ${formatValue(newValue, depth + 1)}`,
-      ].join('\n');
+  case 'changed':
+    if (children) {
+      return `${getIndent(depth)}${key}: {\n${formatTree(children, depth + 1)}\n${' '.repeat(depth * INDENT_SIZE)}}`;
+    }
+    return [
+      `${getIndent(depth, '-')}${key}: ${formatValue(oldValue, depth + 1)}`,
+      `${getIndent(depth, '+')}${key}: ${formatValue(newValue, depth + 1)}`,
+    ].join('\n');
 
-    default:
-      return '';
+  default:
+    return '';
   }
 };
 
-const formatTree = (tree, depth = 1) => (
-  tree.map((node) => formatNode(node, depth)).join('\n')
-);
+function formatTree(tree, depth = 1) {
+  tree.map((node) => formatNode(node, depth)).join('\n');
+};
 
 const stylish = (tree) => {
   if (!Array.isArray(tree) || tree.length === 0) {

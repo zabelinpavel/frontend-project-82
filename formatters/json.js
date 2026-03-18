@@ -41,8 +41,8 @@ export const formatValue = (value, indent) => {
 
 function getContentLines(node, indent) {
   const {
- children, status, value, oldValue, newValue, 
-} = node;
+    children, status, value, oldValue, newValue,
+  } = node;
 
   if (children) {
     return [
@@ -66,8 +66,8 @@ function getContentLines(node, indent) {
 
 export function formatNode(node, indent) {
   const {
- key, status, 
-} = node;
+    key, status,
+  } = node;
   const indentStr = formatIndent(indent);
 
   const baseLines = [

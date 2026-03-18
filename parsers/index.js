@@ -30,5 +30,5 @@ const parseFile = (filePath) => {
 
 export default parseFile;
 export {
- getParser, getFormat, 
+  getParser, getFormat,
 };

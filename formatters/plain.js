@@ -12,8 +12,8 @@ export const formatValue = (value) => {
 
 function formatNode(node, path = '') {
   const {
- key, status, children, value, oldValue, newValue, 
-} = node;
+    key, status, children, value, oldValue, newValue,
+  } = node;
   const fullPath = path ? `${path}.${key}` : key;
 
   if (status === 'unchanged') return '';
@@ -35,7 +35,6 @@ function formatNode(node, path = '') {
 
   return '';
 }
-
 
 function formatTree(tree, path = '') {
   const lines = tree
