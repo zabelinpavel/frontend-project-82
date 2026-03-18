@@ -10,6 +10,7 @@ export const formatValue = (value) => {
   return '[complex value]';
 };
 
+/* eslint-disable no-use-before-define */
 function formatNode(node, path = '') {
   const {
     key, status, children, value, oldValue, newValue,
@@ -35,6 +36,7 @@ function formatNode(node, path = '') {
 
   return '';
 }
+/* eslint-enable no-use-before-define */
 
 function formatTree(tree, path = '') {
   const lines = tree

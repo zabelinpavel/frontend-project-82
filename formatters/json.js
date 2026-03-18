@@ -39,6 +39,7 @@ export const formatValue = (value, indent) => {
   return String(value);
 };
 
+/* eslint-disable no-use-before-define */
 function getContentLines(node, indent) {
   const {
     children, status, value, oldValue, newValue,
@@ -63,6 +64,7 @@ function getContentLines(node, indent) {
 
   return [`${formatIndent(indent + INDENT_SIZE)}"value": ${formatValue(value, indent + INDENT_SIZE)}`];
 }
+/* eslint-enable no-use-before-define */
 
 export function formatNode(node, indent) {
   const {

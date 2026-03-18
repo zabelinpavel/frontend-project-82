@@ -23,6 +23,7 @@ const formatValue = (value, depth) => {
   return `{\n${lines.join('\n')}\n${' '.repeat(closingIndent)}}`;
 };
 
+/* eslint-disable no-use-before-define */
 const formatNode = (node, depth) => {
   const {
     key,
@@ -56,10 +57,11 @@ const formatNode = (node, depth) => {
     return '';
   }
 };
+/* eslint-enable no-use-before-define */
 
 function formatTree(tree, depth = 1) {
   return tree.map((node) => formatNode(node, depth)).join('\n');
-};
+}
 
 const stylish = (tree) => {
   if (!Array.isArray(tree) || tree.length === 0) {
