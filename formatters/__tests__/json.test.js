@@ -1,12 +1,18 @@
-import { describe, it, expect } from '@jest/globals';
+import {
+ describe, it, expect, 
+} from '@jest/globals';
 import genDiff from '../../index.js';
-import json, { formatValue, isObject, formatNode } from '../json.js';
+import json, {
+ formatValue, isObject, formatNode, 
+} from '../json.js';
 
 describe('json formatter helper functions', () => {
   describe('isObject', () => {
     it('should return true for objects', () => {
       expect(isObject({})).toBe(true);
-      expect(isObject({ key: 'value' })).toBe(true);
+      expect(isObject({
+ key: 'value', 
+})).toBe(true);
       expect(isObject([])).toBe(true);
     });
 
@@ -62,14 +68,20 @@ describe('json formatter helper functions', () => {
     });
 
     it('should format objects with values', () => {
-      const result = formatValue({ key: 'value' }, 0);
+      const result = formatValue({
+ key: 'value', 
+}, 0);
       expect(result).toContain('{');
       expect(result).toContain('"key": "value"');
       expect(result).toContain('}');
     });
 
     it('should handle nested objects', () => {
-      const result = formatValue({ outer: { inner: 'value' } }, 0);
+      const result = formatValue({
+ outer: {
+ inner: 'value', 
+}, 
+}, 0);
       expect(result).toContain('outer');
       expect(result).toContain('inner');
       expect(result).toContain('value');
@@ -78,7 +90,9 @@ describe('json formatter helper functions', () => {
 
   describe('formatNode', () => {
     it('should format unchanged node', () => {
-      const node = { key: 'key', status: 'unchanged', value: 'value' };
+      const node = {
+ key: 'key', status: 'unchanged', value: 'value', 
+};
       const result = formatNode(node, 2);
 
       expect(result).toContain('"key": "key"');
@@ -87,7 +101,9 @@ describe('json formatter helper functions', () => {
     });
 
     it('should format added node', () => {
-      const node = { key: 'key', status: 'added', value: 'value' };
+      const node = {
+ key: 'key', status: 'added', value: 'value', 
+};
       const result = formatNode(node, 2);
 
       expect(result).toContain('"key": "key"');
@@ -96,7 +112,9 @@ describe('json formatter helper functions', () => {
     });
 
     it('should format removed node', () => {
-      const node = { key: 'key', status: 'removed', value: 'value' };
+      const node = {
+ key: 'key', status: 'removed', value: 'value', 
+};
       const result = formatNode(node, 2);
 
       expect(result).toContain('"key": "key"');
@@ -139,21 +157,27 @@ describe('json formatter helper functions', () => {
     });
 
     it('should format node with number value', () => {
-      const node = { key: 'key', status: 'unchanged', value: 42 };
+      const node = {
+ key: 'key', status: 'unchanged', value: 42, 
+};
       const result = formatNode(node, 2);
 
       expect(result).toContain('"value": 42');
     });
 
     it('should format node with boolean value', () => {
-      const node = { key: 'key', status: 'added', value: true };
+      const node = {
+ key: 'key', status: 'added', value: true, 
+};
       const result = formatNode(node, 2);
 
       expect(result).toContain('"value": true');
     });
 
     it('should format node with null value', () => {
-      const node = { key: 'key', status: 'removed', value: null };
+      const node = {
+ key: 'key', status: 'removed', value: null, 
+};
       const result = formatNode(node, 2);
 
       expect(result).toContain('"value": null');
@@ -259,14 +283,24 @@ describe('json formatter', () => {
 
   it('should preserve value types', () => {
     const tree = [
-      { key: 'string', status: 'added', value: 'text' },
-      { key: 'number', status: 'added', value: 42 },
-      { key: 'boolean', status: 'added', value: true },
-      { key: 'null', status: 'added', value: null },
+      {
+ key: 'string', status: 'added', value: 'text', 
+},
+      {
+ key: 'number', status: 'added', value: 42, 
+},
+      {
+ key: 'boolean', status: 'added', value: true, 
+},
+      {
+ key: 'null', status: 'added', value: null, 
+},
       {
         key: 'object',
         status: 'added',
-        value: { nested: 'value' },
+        value: {
+ nested: 'value', 
+},
       },
     ];
 
@@ -277,7 +311,9 @@ describe('json formatter', () => {
     expect(parsed[1].value).toBe(42);
     expect(parsed[2].value).toBe(true);
     expect(parsed[3].value).toBe(null);
-    expect(parsed[4].value).toEqual({ nested: 'value' });
+    expect(parsed[4].value).toEqual({
+ nested: 'value', 
+});
   });
 
   it('should format diff from real files', () => {

@@ -1,4 +1,6 @@
-import { describe, it, expect } from '@jest/globals';
+import {
+ describe, it, expect, 
+} from '@jest/globals';
 import stylish from '../stylish.js';
 
 describe('stylish formatter', () => {
@@ -9,16 +11,24 @@ describe('stylish formatter', () => {
 
   it('should format flat objects', () => {
     const tree = [
-      { key: 'follow', status: 'removed', value: false },
-      { key: 'host', status: 'unchanged', value: 'hexlet.io' },
-      { key: 'proxy', status: 'removed', value: '123.234.53.22' },
+      {
+ key: 'follow', status: 'removed', value: false, 
+},
+      {
+ key: 'host', status: 'unchanged', value: 'hexlet.io', 
+},
+      {
+ key: 'proxy', status: 'removed', value: '123.234.53.22', 
+},
       {
         key: 'timeout',
         status: 'changed',
         oldValue: 50,
         newValue: 20,
       },
-      { key: 'verbose', status: 'added', value: true },
+      {
+ key: 'verbose', status: 'added', value: true, 
+},
     ];
     const result = stylish(tree);
     const expected = `{
@@ -87,8 +97,12 @@ describe('stylish formatter', () => {
                   },
                 ],
               },
-              { key: 'key', status: 'unchanged', value: 'value' },
-              { key: 'ops', status: 'added', value: 'vops' },
+              {
+ key: 'key', status: 'unchanged', value: 'value', 
+},
+              {
+ key: 'ops', status: 'added', value: 'vops', 
+},
             ],
           },
         ],
@@ -103,11 +117,15 @@ describe('stylish formatter', () => {
             oldValue: 'bas',
             newValue: 'bars',
           },
-          { key: 'foo', status: 'unchanged', value: 'bar' },
+          {
+ key: 'foo', status: 'unchanged', value: 'bar', 
+},
           {
             key: 'nest',
             status: 'changed',
-            oldValue: { key: 'value' },
+            oldValue: {
+ key: 'value', 
+},
             newValue: 'str',
           },
         ],
@@ -117,14 +135,20 @@ describe('stylish formatter', () => {
         status: 'removed',
         value: {
           abc: 12345,
-          deep: { id: 45 },
+          deep: {
+ id: 45, 
+},
         },
       },
       {
         key: 'group3',
         status: 'added',
         value: {
-          deep: { id: { number: 45 } },
+          deep: {
+ id: {
+ number: 45, 
+}, 
+},
           fee: 100500,
         },
       },

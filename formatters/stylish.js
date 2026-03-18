@@ -18,9 +18,7 @@ const formatValue = (value, depth) => {
   const indent = depth * INDENT_SIZE;
   const closingIndent = (depth - 1) * INDENT_SIZE;
 
-  const lines = Object.entries(value).map(
-    ([key, val]) =>
-      `${' '.repeat(indent)}${key}: ${formatValue(val, depth + 1)}`);
+  const lines = Object.entries(value).map(([key, val]) => `${' '.repeat(indent)}${key}: ${formatValue(val, depth + 1)}`);
 
   return `{\n${lines.join('\n')}\n${' '.repeat(closingIndent)}}`;
 };

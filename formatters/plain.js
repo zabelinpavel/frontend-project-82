@@ -10,15 +10,10 @@ export const formatValue = (value) => {
   return '[complex value]';
 };
 
-function formatTree(tree, path = '') {
-  const lines = tree
-    .map((node) => formatNode(node, path))
-    .filter((line) => line !== '');
-  return lines.join('\n');
-}
-
 function formatNode(node, path = '') {
-  const { key, status, children, value, oldValue, newValue } = node;
+  const {
+ key, status, children, value, oldValue, newValue, 
+} = node;
   const fullPath = path ? `${path}.${key}` : key;
 
   if (status === 'unchanged') return '';
@@ -39,6 +34,14 @@ function formatNode(node, path = '') {
   }
 
   return '';
+}
+
+
+function formatTree(tree, path = '') {
+  const lines = tree
+    .map((node) => formatNode(node, path))
+    .filter((line) => line !== '');
+  return lines.join('\n');
 }
 
 const plain = (tree) => {

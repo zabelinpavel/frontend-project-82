@@ -1,12 +1,18 @@
-import { describe, it, expect } from '@jest/globals';
+import {
+ describe, it, expect, 
+} from '@jest/globals';
 import genDiff from '../index.js';
-import plain, { formatValue, isObject } from '../formatters/plain.js';
+import plain, {
+ formatValue, isObject, 
+} from '../formatters/plain.js';
 
 describe('plain formatter helper functions', () => {
   describe('isObject', () => {
     it('should return true for objects', () => {
       expect(isObject({})).toBe(true);
-      expect(isObject({ key: 'value' })).toBe(true);
+      expect(isObject({
+ key: 'value', 
+})).toBe(true);
       expect(isObject([])).toBe(true);
     });
 
@@ -40,7 +46,9 @@ describe('plain formatter helper functions', () => {
 
     it('should return complex value for objects', () => {
       expect(formatValue({})).toBe('[complex value]');
-      expect(formatValue({ key: 'value' })).toBe('[complex value]');
+      expect(formatValue({
+ key: 'value', 
+})).toBe('[complex value]');
       expect(formatValue([])).toBe('[complex value]');
     });
 
@@ -61,7 +69,9 @@ describe('plain formatter', () => {
 
   it('should format removed properties', () => {
     const tree = [
-      { key: 'key', status: 'removed', value: 'value' },
+      {
+ key: 'key', status: 'removed', value: 'value', 
+},
     ];
 
     expect(plain(tree)).toBe('Property \'key\' was removed');
@@ -69,7 +79,9 @@ describe('plain formatter', () => {
 
   it('should format added properties', () => {
     const tree = [
-      { key: 'key', status: 'added', value: 'value' },
+      {
+ key: 'key', status: 'added', value: 'value', 
+},
     ];
 
     expect(plain(tree)).toBe('Property \'key\' was added with value: \'value\'');

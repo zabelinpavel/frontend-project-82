@@ -29,4 +29,6 @@ const parseFile = (filePath) => {
 };
 
 export default parseFile;
-export { getParser, getFormat };
+export {
+ getParser, getFormat, 
+};

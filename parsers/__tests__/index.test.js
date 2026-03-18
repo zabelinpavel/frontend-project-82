@@ -1,5 +1,9 @@
-import { describe, it, expect } from '@jest/globals';
-import parseFile, { getParser, getFormat } from '../index.js';
+import {
+ describe, it, expect, 
+} from '@jest/globals';
+import parseFile, {
+ getParser, getFormat, 
+} from '../index.js';
 
 describe('getFormat', () => {
   it('should return json for .json files', () => {

@@ -1,4 +1,6 @@
-import { describe, it, expect } from '@jest/globals';
+import {
+ describe, it, expect, 
+} from '@jest/globals';
 import parseYaml from '../yaml.js';
 
 describe('parseYaml', () => {
