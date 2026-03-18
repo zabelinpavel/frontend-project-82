@@ -10,20 +10,18 @@ export const formatValue = (value) => {
   return '[complex value]';
 };
 
-const formatNode = (node, path = '') => {
-  const {
-    key,
-    status,
-    children,
-    value,
-    oldValue,
-    newValue,
-  } = node;
+function formatTree(tree, path = '') {
+  const lines = tree
+    .map((node) => formatNode(node, path))
+    .filter((line) => line !== '');
+  return lines.join('\n');
+}
+
+function formatNode(node, path = '') {
+  const { key, status, children, value, oldValue, newValue } = node;
   const fullPath = path ? `${path}.${key}` : key;
 
-  if (status === 'unchanged') {
-    return '';
-  }
+  if (status === 'unchanged') return '';
 
   if (status === 'added') {
     return `Property '${fullPath}' was added with value: ${formatValue(value)}`;
@@ -41,14 +39,7 @@ const formatNode = (node, path = '') => {
   }
 
   return '';
-};
-
-const formatTree = (tree, path = '') => {
-  const lines = tree
-    .map((node) => formatNode(node, path))
-    .filter((line) => line !== '');
-  return lines.join('\n');
-};
+}
 
 const plain = (tree) => {
   if (!Array.isArray(tree) || tree.length === 0) {

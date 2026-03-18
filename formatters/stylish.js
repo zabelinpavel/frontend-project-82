@@ -20,15 +20,10 @@ const formatValue = (value, depth) => {
 
   const lines = Object.entries(value).map(
     ([key, val]) =>
-      `${' '.repeat(indent)}${key}: ${formatValue(val, depth + 1)}`,
-  );
+      `${' '.repeat(indent)}${key}: ${formatValue(val, depth + 1)}`);
 
   return `{\n${lines.join('\n')}\n${' '.repeat(closingIndent)}}`;
 };
-
-const formatTree = (tree, depth = 1) => (
-  tree.map((node) => formatNode(node, depth)).join('\n')
-);
 
 const formatNode = (node, depth) => {
   const {
@@ -63,6 +58,10 @@ const formatNode = (node, depth) => {
       return '';
   }
 };
+
+const formatTree = (tree, depth = 1) => (
+  tree.map((node) => formatNode(node, depth)).join('\n')
+);
 
 const stylish = (tree) => {
   if (!Array.isArray(tree) || tree.length === 0) {
