@@ -1,95 +1,95 @@
 const INDENT_SIZE = 2;
 
 export const isObject = (value) => {
-    if (value === null) return false;
-    return typeof value === 'object';
+  if (value === null) return false;
+  return typeof value === 'object';
 };
 
 const formatIndent = (indent) => ' '.repeat(indent);
 
 export const formatValue = (value, indent) => {
-    if (value === null) {
-        return 'null';
-    }
+  if (value === null) {
+    return 'null';
+  }
 
-    if (typeof value === 'boolean') {
-        return value ? 'true' : 'false';
-    }
+  if (typeof value === 'boolean') {
+    return value ? 'true' : 'false';
+  }
 
-    if (typeof value === 'number') {
-        return String(value);
-    }
-
-    if (typeof value === 'string') {
-        return `"${value}"`;
-    }
-
-    if (Array.isArray(value)) {
-        if (value.length === 0) {
-            return '[]';
-        }
-        const innerIndent = indent + INDENT_SIZE;
-        const indentStr = formatIndent(innerIndent);
-        const closingIndent = formatIndent(indent);
-        const items = value.map(item => `${indentStr}${formatValue(item, innerIndent)}`);
-        return `[\n${items.join(',\n')}\n${closingIndent}]`;
-    }
-
-    if (isObject(value)) {
-        const entries = Object.entries(value);
-        if (entries.length === 0) {
-            return '{}';
-        }
-        const innerIndent = indent + INDENT_SIZE;
-        const indentStr = formatIndent(innerIndent);
-        const closingIndent = formatIndent(indent);
-        const items = entries.map(([key, val]) => {
-            const formattedVal = formatValue(val, innerIndent);
-            return `${indentStr}"${key}": ${formattedVal}`;
-        });
-        return `{\n${items.join(',\n')}\n${closingIndent}}`;
-    }
-
+  if (typeof value === 'number') {
     return String(value);
+  }
+
+  if (typeof value === 'string') {
+    return `"${value}"`;
+  }
+
+  if (Array.isArray(value)) {
+    if (value.length === 0) {
+      return '[]';
+    }
+    const innerIndent = indent + INDENT_SIZE;
+    const indentStr = formatIndent(innerIndent);
+    const closingIndent = formatIndent(indent);
+    const items = value.map((item) => `${indentStr}${formatValue(item, innerIndent)}`);
+    return `[\n${items.join(',\n')}\n${closingIndent}]`;
+  }
+
+  if (isObject(value)) {
+    const entries = Object.entries(value);
+    if (entries.length === 0) {
+      return '{}';
+    }
+    const innerIndent = indent + INDENT_SIZE;
+    const indentStr = formatIndent(innerIndent);
+    const closingIndent = formatIndent(indent);
+    const items = entries.map(([key, val]) => {
+      const formattedVal = formatValue(val, innerIndent);
+      return `${indentStr}"${key}": ${formattedVal}`;
+    });
+    return `{\n${items.join(',\n')}\n${closingIndent}}`;
+  }
+
+  return String(value);
 };
 
 export const formatNode = (node, indent) => {
-    const { key, status, children, value, oldValue, newValue } = node;
-    const indentStr = formatIndent(indent);
+  const { key, status, children, value, oldValue, newValue } = node;
+  const indentStr = formatIndent(indent);
 
-    const lines = [];
-    lines.push(`${indentStr}{`);
-    lines.push(`${formatIndent(indent + INDENT_SIZE)}"key": "${key}",`);
-    lines.push(`${formatIndent(indent + INDENT_SIZE)}"status": "${status}",`);
+  const lines = [];
+  lines.push(`${indentStr}{`);
+  lines.push(`${formatIndent(indent + INDENT_SIZE)}"key": "${key}",`);
+  lines.push(`${formatIndent(indent + INDENT_SIZE)}"status": "${status}",`);
 
-    if (children) {
-        lines.push(`${formatIndent(indent + INDENT_SIZE)}"children": [`);
-        const childrenLines = children.map(child => formatNode(child, indent + INDENT_SIZE * 2));
-        lines.push(childrenLines.join(',\n'));
-        lines.push(`${formatIndent(indent + INDENT_SIZE)}]`);
-    } else if (status === 'changed') {
-        lines.push(`${formatIndent(indent + INDENT_SIZE)}"oldValue": ${formatValue(oldValue, indent + INDENT_SIZE)},`);
-        lines.push(`${formatIndent(indent + INDENT_SIZE)}"newValue": ${formatValue(newValue, indent + INDENT_SIZE)}`);
-    } else {
-        lines.push(`${formatIndent(indent + INDENT_SIZE)}"value": ${formatValue(value, indent + INDENT_SIZE)}`);
-    }
+  if (children) {
+    lines.push(`${formatIndent(indent + INDENT_SIZE)}"children": [`);
+    const childrenLines = children.map((child) => formatNode(child, indent + INDENT_SIZE * 2));
+    lines.push(childrenLines.join(',\n'));
+    lines.push(`${formatIndent(indent + INDENT_SIZE)}]`);
+  } else if (status === 'changed') {
+    lines.push(`${formatIndent(indent + INDENT_SIZE)}"oldValue": ${formatValue(oldValue, indent + INDENT_SIZE)},`);
+    lines.push(`${formatIndent(indent + INDENT_SIZE)}"newValue": ${formatValue(newValue, indent + INDENT_SIZE)}`);
+  } else {
+    lines.push(`${formatIndent(indent + INDENT_SIZE)}"value": ${formatValue(value, indent + INDENT_SIZE)}`);
+  }
 
-    lines.push(`${indentStr}}`);
+  lines.push(`${indentStr}}`);
 
-    return lines.join('\n');
+  return lines.join('\n');
 };
 
 const json = (tree) => {
-    if (!Array.isArray(tree)) {
-        return '[]';
-    }
+  if (!Array.isArray(tree)) {
+    return '[]';
+  }
 
-    if (tree.length === 0) {
-        return '[]';
-    }
+  if (tree.length === 0) {
+    return '[]';
+  }
 
-    const nodes = tree.map(node => formatNode(node, INDENT_SIZE));
-    return `[\n${nodes.join(',\n')}\n]`;
+  const nodes = tree.map((node) => formatNode(node, INDENT_SIZE));
+  return `[\n${nodes.join(',\n')}\n]`;
 };
 
 export default json;
