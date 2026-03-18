@@ -15,7 +15,7 @@ program
     .argument('<filepath2>');
 
 program
-    .option('-f, --format <type>', 'output format', 'plain');
+    .option('-f, --format <type>', 'output format', 'stylish');
 
 program.action((filePath1, filePath2, options) => {
     const result = generateDiff(filePath1, filePath2, options.format);
