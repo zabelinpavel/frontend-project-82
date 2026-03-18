@@ -77,7 +77,12 @@ describe('plain formatter', () => {
 
   it('should format changed properties', () => {
     const tree = [
-      { key: 'key', status: 'changed', oldValue: 'old', newValue: 'new' },
+      {
+        key: 'key',
+        status: 'changed',
+        oldValue: 'old',
+        newValue: 'new',
+      },
     ];
 
     expect(plain(tree)).toBe('Property \'key\' was updated. From \'old\' to \'new\'');
@@ -104,7 +109,11 @@ describe('plain formatter', () => {
 
   it('should return empty string for unchanged tree', () => {
     const tree = [
-      { key: 'key', status: 'unchanged', value: 'value' },
+      {
+        key: 'key',
+        status: 'unchanged',
+        value: 'value',
+      },
     ];
 
     expect(plain(tree)).toBe('');
@@ -116,10 +125,27 @@ describe('plain formatter', () => {
 
   it('should handle multiple changes', () => {
     const tree = [
-      { key: 'a', status: 'unchanged', value: '1' },
-      { key: 'b', status: 'changed', oldValue: '2', newValue: '3' },
-      { key: 'c', status: 'removed', value: '4' },
-      { key: 'd', status: 'added', value: '5' },
+      {
+        key: 'a',
+        status: 'unchanged',
+        value: '1',
+      },
+      {
+        key: 'b',
+        status: 'changed',
+        oldValue: '2',
+        newValue: '3',
+      },
+      {
+        key: 'c',
+        status: 'removed',
+        value: '4',
+      },
+      {
+        key: 'd',
+        status: 'added',
+        value: '5',
+      },
     ];
 
     expect(plain(tree)).toBe('Property \'b\' was updated. From \'2\' to \'3\'\nProperty \'c\' was removed\nProperty \'d\' was added with value: \'5\'');

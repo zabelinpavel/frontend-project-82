@@ -38,12 +38,39 @@ describe('stylish formatter', () => {
         key: 'common',
         status: 'changed',
         children: [
-          { key: 'follow', status: 'added', value: false },
-          { key: 'setting1', status: 'unchanged', value: 'Value 1' },
-          { key: 'setting2', status: 'removed', value: 200 },
-          { key: 'setting3', status: 'changed', oldValue: true, newValue: null },
-          { key: 'setting4', status: 'added', value: 'blah blah' },
-          { key: 'setting5', status: 'added', value: { key5: 'value5' } },
+          {
+            key: 'follow',
+            status: 'added',
+            value: false,
+          },
+          {
+            key: 'setting1',
+            status: 'unchanged',
+            value: 'Value 1',
+          },
+          {
+            key: 'setting2',
+            status: 'removed',
+            value: 200,
+          },
+          {
+            key: 'setting3',
+            status: 'changed',
+            oldValue: true,
+            newValue: null,
+          },
+          {
+            key: 'setting4',
+            status: 'added',
+            value: 'blah blah',
+          },
+          {
+            key: 'setting5',
+            status: 'added',
+            value: {
+              key5: 'value5',
+            },
+          },
           {
             key: 'setting6',
             status: 'changed',

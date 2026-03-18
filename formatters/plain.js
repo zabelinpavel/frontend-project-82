@@ -10,13 +10,6 @@ export const formatValue = (value) => {
   return '[complex value]';
 };
 
-const formatTree = (tree, path = '') => {
-  const lines = tree
-    .map((node) => formatNode(node, path))
-    .filter((line) => line !== '');
-  return lines.join('\n');
-};
-
 const formatNode = (node, path = '') => {
   const {
     key,
@@ -48,6 +41,13 @@ const formatNode = (node, path = '') => {
   }
 
   return '';
+};
+
+const formatTree = (tree, path = '') => {
+  const lines = tree
+    .map((node) => formatNode(node, path))
+    .filter((line) => line !== '');
+  return lines.join('\n');
 };
 
 const plain = (tree) => {

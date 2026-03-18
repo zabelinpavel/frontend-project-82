@@ -38,7 +38,12 @@ describe('buildDiffTree', () => {
     const result = buildDiffTree(data1, data2);
 
     expect(result).toEqual([
-      { key: 'key', status: 'changed', oldValue: 'old', newValue: 'new' },
+      {
+        key: 'key',
+        status: 'changed',
+        oldValue: 'old',
+        newValue: 'new',
+      },
     ]);
   });
 
@@ -69,10 +74,27 @@ describe('buildDiffTree', () => {
     const result = buildDiffTree(data1, data2);
 
     expect(result).toEqual([
-      { key: 'a', status: 'unchanged', value: '1' },
-      { key: 'b', status: 'changed', oldValue: '2', newValue: 'changed' },
-      { key: 'c', status: 'removed', value: '3' },
-      { key: 'd', status: 'added', value: '4' },
+      {
+        key: 'a',
+        status: 'unchanged',
+        value: '1',
+      },
+      {
+        key: 'b',
+        status: 'changed',
+        oldValue: '2',
+        newValue: 'changed',
+      },
+      {
+        key: 'c',
+        status: 'removed',
+        value: '3',
+      },
+      {
+        key: 'd',
+        status: 'added',
+        value: '4',
+      },
     ]);
   });
 });

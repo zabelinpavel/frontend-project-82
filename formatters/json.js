@@ -54,7 +54,14 @@ export const formatValue = (value, indent) => {
 };
 
 export const formatNode = (node, indent) => {
-  const { key, status, children, value, oldValue, newValue } = node;
+  const {
+    key,
+    status,
+    children,
+    value,
+    oldValue,
+    newValue,
+  } = node;
   const indentStr = formatIndent(indent);
 
   const baseLines = [
@@ -63,24 +70,20 @@ export const formatNode = (node, indent) => {
     `${formatIndent(indent + INDENT_SIZE)}"status": "${status}",`,
   ];
 
-  let contentLines;
-  if (children) {
-    const childrenLines = children.map((child) => formatNode(child, indent + INDENT_SIZE * 2));
-    contentLines = [
+  const contentLines = children
+    ? [
       `${formatIndent(indent + INDENT_SIZE)}"children": [`,
-      childrenLines.join(',\n'),
+      children.map((child) => formatNode(child, indent + INDENT_SIZE * 2)).join(',\n'),
       `${formatIndent(indent + INDENT_SIZE)}]`,
-    ];
-  } else if (status === 'changed') {
-    contentLines = [
-      `${formatIndent(indent + INDENT_SIZE)}"oldValue": ${formatValue(oldValue, indent + INDENT_SIZE)},`,
-      `${formatIndent(indent + INDENT_SIZE)}"newValue": ${formatValue(newValue, indent + INDENT_SIZE)}`,
-    ];
-  } else {
-    contentLines = [
-      `${formatIndent(indent + INDENT_SIZE)}"value": ${formatValue(value, indent + INDENT_SIZE)}`,
-    ];
-  }
+    ]
+    : status === 'changed'
+      ? [
+        `${formatIndent(indent + INDENT_SIZE)}"oldValue": ${formatValue(oldValue, indent + INDENT_SIZE)},`,
+        `${formatIndent(indent + INDENT_SIZE)}"newValue": ${formatValue(newValue, indent + INDENT_SIZE)}`,
+      ]
+      : [
+        `${formatIndent(indent + INDENT_SIZE)}"value": ${formatValue(value, indent + INDENT_SIZE)}`,
+      ];
 
   const allLines = [...baseLines, ...contentLines, `${indentStr}}`];
 

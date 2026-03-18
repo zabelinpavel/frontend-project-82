@@ -105,7 +105,12 @@ describe('json formatter helper functions', () => {
     });
 
     it('should format changed node with oldValue and newValue', () => {
-      const node = { key: 'key', status: 'changed', oldValue: 'old', newValue: 'new' };
+      const node = {
+        key: 'key',
+        status: 'changed',
+        oldValue: 'old',
+        newValue: 'new',
+      };
       const result = formatNode(node, 2);
 
       expect(result).toContain('"key": "key"');
@@ -159,20 +164,54 @@ describe('json formatter helper functions', () => {
 describe('json formatter', () => {
   it('should format diff tree as JSON', () => {
     const tree = [
-      { key: 'key1', status: 'unchanged', value: 'value1' },
-      { key: 'key2', status: 'added', value: 'value2' },
-      { key: 'key3', status: 'removed', value: 'value3' },
-      { key: 'key4', status: 'changed', oldValue: 'old', newValue: 'new' },
+      {
+        key: 'key1',
+        status: 'unchanged',
+        value: 'value1',
+      },
+      {
+        key: 'key2',
+        status: 'added',
+        value: 'value2',
+      },
+      {
+        key: 'key3',
+        status: 'removed',
+        value: 'value3',
+      },
+      {
+        key: 'key4',
+        status: 'changed',
+        oldValue: 'old',
+        newValue: 'new',
+      },
     ];
 
     const result = json(tree);
     const parsed = JSON.parse(result);
 
     expect(parsed).toHaveLength(4);
-    expect(parsed[0]).toEqual({ key: 'key1', status: 'unchanged', value: 'value1' });
-    expect(parsed[1]).toEqual({ key: 'key2', status: 'added', value: 'value2' });
-    expect(parsed[2]).toEqual({ key: 'key3', status: 'removed', value: 'value3' });
-    expect(parsed[3]).toEqual({ key: 'key4', status: 'changed', oldValue: 'old', newValue: 'new' });
+    expect(parsed[0]).toEqual({
+      key: 'key1',
+      status: 'unchanged',
+      value: 'value1',
+    });
+    expect(parsed[1]).toEqual({
+      key: 'key2',
+      status: 'added',
+      value: 'value2',
+    });
+    expect(parsed[2]).toEqual({
+      key: 'key3',
+      status: 'removed',
+      value: 'value3',
+    });
+    expect(parsed[3]).toEqual({
+      key: 'key4',
+      status: 'changed',
+      oldValue: 'old',
+      newValue: 'new',
+    });
   });
 
   it('should format empty tree', () => {
