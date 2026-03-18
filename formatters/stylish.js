@@ -58,7 +58,7 @@ const formatNode = (node, depth) => {
 };
 
 function formatTree(tree, depth = 1) {
-  tree.map((node) => formatNode(node, depth)).join('\n');
+  return tree.map((node) => formatNode(node, depth)).join('\n');
 };
 
 const stylish = (tree) => {
