@@ -1,5 +1,5 @@
 const INDENT_SIZE = 4;
-    
+
 const isObject = (value) => {
   if (value === null) return false;
   return typeof value === 'object';
@@ -26,8 +26,17 @@ const formatValue = (value, depth) => {
   return `{\n${lines.join('\n')}\n${' '.repeat(closingIndent)}}`;
 };
 
+const formatTree = (tree, depth = 1) => tree.map((node) => formatNode(node, depth)).join('\n');
+
 const formatNode = (node, depth) => {
-  const { key, status, children, value, oldValue, newValue } = node;
+  const {
+    key,
+    status,
+    children,
+    value,
+    oldValue,
+    newValue,
+  } = node;
 
   switch (status) {
   case 'unchanged':
@@ -47,11 +56,10 @@ const formatNode = (node, depth) => {
       `${getIndent(depth, '-')}${key}: ${formatValue(oldValue, depth + 1)}`,
       `${getIndent(depth, '+')}${key}: ${formatValue(newValue, depth + 1)}`,
     ].join('\n');
-  }
-};
 
-const formatTree = (tree, depth = 1) => {
-  return tree.map((node) => formatNode(node, depth)).join('\n');
+  default:
+    return '';
+  }
 };
 
 const stylish = (tree) => {

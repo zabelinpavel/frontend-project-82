@@ -18,8 +18,6 @@ const formatTree = (tree, formatName) => {
   return stylish(tree);
 };
 
-const format = (tree, formatName = 'stylish') => {
-  return formatTree(tree, formatName);
-};
+const format = (tree, formatName = 'stylish') => formatTree(tree, formatName);
 
 export default format;

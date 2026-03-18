@@ -89,7 +89,12 @@ describe('plain formatter', () => {
         key: 'outer',
         status: 'changed',
         children: [
-          { key: 'inner', status: 'changed', oldValue: 'value1', newValue: 'value2' },
+          {
+            key: 'inner',
+            status: 'changed',
+            oldValue: 'value1',
+            newValue: 'value2',
+          },
         ],
       },
     ];

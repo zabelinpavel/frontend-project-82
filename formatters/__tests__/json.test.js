@@ -119,7 +119,11 @@ describe('json formatter helper functions', () => {
         key: 'parent',
         status: 'changed',
         children: [
-          { key: 'child', status: 'added', value: 'value' },
+          {
+            key: 'child',
+            status: 'added',
+            value: 'value',
+          },
         ],
       };
       const result = formatNode(node, 2);
@@ -188,7 +192,12 @@ describe('json formatter', () => {
             key: 'inner',
             status: 'changed',
             children: [
-              { key: 'deep', status: 'changed', oldValue: 'v1', newValue: 'v2' },
+              {
+                key: 'deep',
+                status: 'changed',
+                oldValue: 'v1',
+                newValue: 'v2',
+              },
             ],
           },
         ],
@@ -215,7 +224,11 @@ describe('json formatter', () => {
       { key: 'number', status: 'added', value: 42 },
       { key: 'boolean', status: 'added', value: true },
       { key: 'null', status: 'added', value: null },
-      { key: 'object', status: 'added', value: { nested: 'value' } },
+      {
+        key: 'object',
+        status: 'added',
+        value: { nested: 'value' },
+      },
     ];
 
     const result = json(tree);
@@ -267,7 +280,11 @@ describe('json formatter', () => {
 
   it('should produce valid JSON string', () => {
     const tree = [
-      { key: 'test', status: 'added', value: 'value' },
+      {
+        key: 'test',
+        status: 'added',
+        value: 'value',
+      },
     ];
 
     const result = json(tree);
@@ -278,8 +295,16 @@ describe('json formatter', () => {
 
   it('should use pretty printing with 2 spaces', () => {
     const tree = [
-      { key: 'key1', status: 'added', value: 'value1' },
-      { key: 'key2', status: 'removed', value: 'value2' },
+      {
+        key: 'key1',
+        status: 'added',
+        value: 'value1',
+      },
+      {
+        key: 'key2',
+        status: 'removed',
+        value: 'value2',
+      },
     ];
 
     const result = json(tree);

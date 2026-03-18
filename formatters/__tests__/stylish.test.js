@@ -12,7 +12,12 @@ describe('stylish formatter', () => {
       { key: 'follow', status: 'removed', value: false },
       { key: 'host', status: 'unchanged', value: 'hexlet.io' },
       { key: 'proxy', status: 'removed', value: '123.234.53.22' },
-      { key: 'timeout', status: 'changed', oldValue: 50, newValue: 20 },
+      {
+        key: 'timeout',
+        status: 'changed',
+        oldValue: 50,
+        newValue: 20,
+      },
       { key: 'verbose', status: 'added', value: true },
     ];
     const result = stylish(tree);
@@ -47,7 +52,12 @@ describe('stylish formatter', () => {
                 key: 'doge',
                 status: 'changed',
                 children: [
-                  { key: 'wow', status: 'changed', oldValue: '', newValue: 'so much' },
+                  {
+                    key: 'wow',
+                    status: 'changed',
+                    oldValue: '',
+                    newValue: 'so much',
+                  },
                 ],
               },
               { key: 'key', status: 'unchanged', value: 'value' },
@@ -60,9 +70,19 @@ describe('stylish formatter', () => {
         key: 'group1',
         status: 'changed',
         children: [
-          { key: 'baz', status: 'changed', oldValue: 'bas', newValue: 'bars' },
+          {
+            key: 'baz',
+            status: 'changed',
+            oldValue: 'bas',
+            newValue: 'bars',
+          },
           { key: 'foo', status: 'unchanged', value: 'bar' },
-          { key: 'nest', status: 'changed', oldValue: { key: 'value' }, newValue: 'str' },
+          {
+            key: 'nest',
+            status: 'changed',
+            oldValue: { key: 'value' },
+            newValue: 'str',
+          },
         ],
       },
       {
@@ -129,5 +149,4 @@ describe('stylish formatter', () => {
 }`;
     expect(result).toBe(expected);
   });
-
 });

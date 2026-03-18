@@ -37,10 +37,19 @@ const buildDiffTree = (data1, data2) => {
     }
 
     if (value1 === value2) {
-      return { key, status: 'unchanged', value: value1 };
+      return {
+        key,
+        status: 'unchanged',
+        value: value1,
+      };
     }
 
-    return { key, status: 'changed', oldValue: value1, newValue: value2 };
+    return {
+      key,
+      status: 'changed',
+      oldValue: value1,
+      newValue: value2,
+    };
   });
 };
 

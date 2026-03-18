@@ -57,26 +57,34 @@ export const formatNode = (node, indent) => {
   const { key, status, children, value, oldValue, newValue } = node;
   const indentStr = formatIndent(indent);
 
-  const lines = [];
-  lines.push(`${indentStr}{`);
-  lines.push(`${formatIndent(indent + INDENT_SIZE)}"key": "${key}",`);
-  lines.push(`${formatIndent(indent + INDENT_SIZE)}"status": "${status}",`);
+  const baseLines = [
+    `${indentStr}{`,
+    `${formatIndent(indent + INDENT_SIZE)}"key": "${key}",`,
+    `${formatIndent(indent + INDENT_SIZE)}"status": "${status}",`,
+  ];
 
+  let contentLines;
   if (children) {
-    lines.push(`${formatIndent(indent + INDENT_SIZE)}"children": [`);
     const childrenLines = children.map((child) => formatNode(child, indent + INDENT_SIZE * 2));
-    lines.push(childrenLines.join(',\n'));
-    lines.push(`${formatIndent(indent + INDENT_SIZE)}]`);
+    contentLines = [
+      `${formatIndent(indent + INDENT_SIZE)}"children": [`,
+      childrenLines.join(',\n'),
+      `${formatIndent(indent + INDENT_SIZE)}]`,
+    ];
   } else if (status === 'changed') {
-    lines.push(`${formatIndent(indent + INDENT_SIZE)}"oldValue": ${formatValue(oldValue, indent + INDENT_SIZE)},`);
-    lines.push(`${formatIndent(indent + INDENT_SIZE)}"newValue": ${formatValue(newValue, indent + INDENT_SIZE)}`);
+    contentLines = [
+      `${formatIndent(indent + INDENT_SIZE)}"oldValue": ${formatValue(oldValue, indent + INDENT_SIZE)},`,
+      `${formatIndent(indent + INDENT_SIZE)}"newValue": ${formatValue(newValue, indent + INDENT_SIZE)}`,
+    ];
   } else {
-    lines.push(`${formatIndent(indent + INDENT_SIZE)}"value": ${formatValue(value, indent + INDENT_SIZE)}`);
+    contentLines = [
+      `${formatIndent(indent + INDENT_SIZE)}"value": ${formatValue(value, indent + INDENT_SIZE)}`,
+    ];
   }
 
-  lines.push(`${indentStr}}`);
+  const allLines = [...baseLines, ...contentLines, `${indentStr}}`];
 
-  return lines.join('\n');
+  return allLines.join('\n');
 };
 
 const json = (tree) => {
