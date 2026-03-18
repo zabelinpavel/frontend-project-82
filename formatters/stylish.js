@@ -1,74 +1,57 @@
-const INDENT_SIZE = 2;
-const BASE_INDENT = 2;
-
+const INDENT_SIZE = 4;
+    
 const isObject = (value) => {
     if (value === null) return false;
     return typeof value === 'object';
 };
 
-const formatValue = (value, indent) => {
-    if (value === null) {
-        return 'null';
-    }
-
-    if (typeof value === 'boolean') {
-        return value ? 'true' : 'false';
-    }
-
-    if (!isObject(value)) {
-        return String(value);
-    }
-
-    const entries = Object.entries(value);
-    if (entries.length === 0) {
-        return '{}';
-    }
-
-    const innerIndent = indent + INDENT_SIZE;
-    const indentStr = ' '.repeat(innerIndent);
-    const closingIndent = ' '.repeat(indent);
-
-    const lines = entries.map(([key, val]) => {
-        const formattedVal = formatValue(val, innerIndent);
-        return `${indentStr}${key}: ${formattedVal}`;
-    });
-
-    return `{\n${lines.join('\n')}\n${closingIndent}}`;
+const getIndent = (depth, sign = ' ') => {
+    const indentSize = depth * INDENT_SIZE;
+    return ' '.repeat(indentSize - 2) + sign + ' ';
 };
 
-const formatNode = (node, indent) => {
+const formatValue = (value, depth) => {
+    if (value === null) return 'null';
+    if (typeof value === 'boolean') return value ? 'true' : 'false';
+    if (!isObject(value)) return String(value);
+
+    const indent = depth * INDENT_SIZE;
+    const closingIndent = (depth - 1) * INDENT_SIZE;
+
+    const lines = Object.entries(value).map(
+        ([key, val]) =>
+            `${' '.repeat(indent)}${key}: ${formatValue(val, depth + 1)}`
+    );
+
+    return `{\n${lines.join('\n')}\n${' '.repeat(closingIndent)}}`;
+};
+
+const formatNode = (node, depth) => {
     const { key, status, children, value, oldValue, newValue } = node;
-    const indentStr = ' '.repeat(indent);
 
-    if (status === 'unchanged') {
-        return `${indentStr}${key}: ${formatValue(value, indent + INDENT_SIZE)}`;
-    }
+    switch (status) {
+    case 'unchanged':
+        return `${getIndent(depth)}${key}: ${formatValue(value, depth + 1)}`;
 
-    if (status === 'added') {
-        return `${indentStr}+ ${key}: ${formatValue(value, indent + INDENT_SIZE)}`;
-    }
+    case 'added':
+        return `${getIndent(depth, '+')}${key}: ${formatValue(value, depth + 1)}`;
 
-    if (status === 'removed') {
-        return `${indentStr}- ${key}: ${formatValue(value, indent + INDENT_SIZE)}`;
-    }
+    case 'removed':
+        return `${getIndent(depth, '-')}${key}: ${formatValue(value, depth + 1)}`;
 
-    if (status === 'changed') {
+    case 'changed':
         if (children) {
-            const childrenFormatted = formatTree(children, indent + INDENT_SIZE);
-            return `${indentStr}${key}: {\n${childrenFormatted}\n${indentStr}}`;
+            return `${getIndent(depth)}${key}: {\n${formatTree(children, depth + 1)}\n${' '.repeat(depth * INDENT_SIZE)}}`;
         }
         return [
-            `${indentStr}- ${key}: ${formatValue(oldValue, indent + INDENT_SIZE)}`,
-            `${indentStr}+ ${key}: ${formatValue(newValue, indent + INDENT_SIZE)}`
+            `${getIndent(depth, '-')}${key}: ${formatValue(oldValue, depth + 1)}`,
+            `${getIndent(depth, '+')}${key}: ${formatValue(newValue, depth + 1)}`
         ].join('\n');
     }
-
-    return '';
 };
 
-const formatTree = (tree, indent = BASE_INDENT) => {
-    const lines = tree.map((node) => formatNode(node, indent));
-    return lines.join('\n');
+const formatTree = (tree, depth = 1) => {
+    return tree.map((node) => formatNode(node, depth)).join('\n');
 };
 
 const stylish = (tree) => {
