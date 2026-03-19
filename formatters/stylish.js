@@ -35,26 +35,26 @@ const formatNode = (node, depth) => {
   } = node;
 
   switch (status) {
-  case 'unchanged':
-    return `${getIndent(depth)}${key}: ${formatValue(value, depth + 1)}`;
+    case 'unchanged':
+      return `${getIndent(depth)}${key}: ${formatValue(value, depth + 1)}`;
 
-  case 'added':
-    return `${getIndent(depth, '+')}${key}: ${formatValue(value, depth + 1)}`;
+    case 'added':
+      return `${getIndent(depth, '+')}${key}: ${formatValue(value, depth + 1)}`;
 
-  case 'removed':
-    return `${getIndent(depth, '-')}${key}: ${formatValue(value, depth + 1)}`;
+    case 'removed':
+      return `${getIndent(depth, '-')}${key}: ${formatValue(value, depth + 1)}`;
 
-  case 'changed':
-    if (children) {
-      return `${getIndent(depth)}${key}: {\n${formatTree(children, depth + 1)}\n${' '.repeat(depth * INDENT_SIZE)}}`;
-    }
-    return [
-      `${getIndent(depth, '-')}${key}: ${formatValue(oldValue, depth + 1)}`,
-      `${getIndent(depth, '+')}${key}: ${formatValue(newValue, depth + 1)}`,
-    ].join('\n');
+    case 'changed':
+      if (children) {
+        return `${getIndent(depth)}${key}: {\n${formatTree(children, depth + 1)}\n${' '.repeat(depth * INDENT_SIZE)}}`;
+      }
+      return [
+        `${getIndent(depth, '-')}${key}: ${formatValue(oldValue, depth + 1)}`,
+        `${getIndent(depth, '+')}${key}: ${formatValue(newValue, depth + 1)}`,
+      ].join('\n');
 
-  default:
-    return '';
+    default:
+      return '';
   }
 };
 /* eslint-enable no-use-before-define */
